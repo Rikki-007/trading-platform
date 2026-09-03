@@ -1,0 +1,138 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #22273; font-size: 11pt; line-height: 1.5; }
+  h1 { color: #16213E; font-size: 22pt; border-bottom: 2px solid #D9DEE6; padding-bottom: 6px; margin-top: 30px; }
+  h2 { color: #16213E; font-size: 15pt; margin-top: 22px; }
+  p { color: #22273; }
+  .eyebrow { color: #B8860B; font-weight: bold; font-size: 13pt; letter-spacing: 1px; }
+  .title { color: #16213E; font-size: 30pt; font-weight: bold; margin: 4px 0 2px 0; }
+  .subtitle { color: #475569; font-style: italic; font-size: 13pt; margin-bottom: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px 0; }
+  th { background-color: #16213E; color: #FFFFFF; text-align: left; padding: 8px 10px; font-size: 10pt; border: 1px solid #16213E; }
+  td { border: 1px solid #D9DEE6; padding: 7px 10px; font-size: 10pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #F5F7FA; }
+  .meta-table td { border: none; padding: 3px 10px 3px 0; }
+  .meta-label { color: #475569; font-weight: bold; width: 140px; }
+  .answer { background-color: #FFF7DE; }
+  .guidance { color: #475569; font-style: italic; font-size: 9pt; }
+  .qnum { text-align: center; width: 24px; }
+  .rec { background-color: #E3F1E9; border: 1px solid #8FC9A6; padding: 12px 16px; margin: 4px 0 20px 0; }
+  .rec-label { color: #1F7A4D; font-weight: bold; font-size: 9pt; letter-spacing: 0.5px; }
+  .warn { background-color: #FBE4E4; border: 1px solid #E8A0A0; padding: 12px 16px; margin: 12px 0 20px 0; }
+  .warn-label { color: #B91C1C; font-weight: bold; font-size: 9pt; letter-spacing: 0.5px; }
+  .note { color: #475569; font-style: italic; font-size: 9.5pt; }
+  ul, ol { margin-top: 4px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">MERIDIAN &mdash; PHASE 2</div>
+<div class="title">Client Discovery &amp; Requirements</div>
+<div class="subtitle">Video rooms, trade broadcasting, and a &euro;250 funded tier &mdash; scoped before any of it is built</div>
+<table class="meta-table">
+  <tr><td class="meta-label">Date</td><td>September 3, 2026</td></tr>
+  <tr><td class="meta-label">Project</td><td>trading-platform (&ldquo;Meridian&rdquo;)</td></tr>
+  <tr><td class="meta-label">Purpose</td><td>Confirm Phase 2 scope, gather your answers, flag what needs legal input first</td></tr>
+</table>
+
+<h1>Quick Summary</h1>
+<p>Meridian v1 (the paper-trading demo) is done and unchanged. Phase 2 proposes three additions: video consultation rooms, instant trade-broadcast notifications, and a real-money funded tier starting at a &euro;250 minimum deposit. None of this is built yet &mdash; this document scopes it and collects your answers before we write any code.</p>
+<div class="warn"><div class="warn-label">READ THIS FIRST</div>Adding real deposits and trade broadcasting changes what kind of business this is. A demo with fake money is software. A platform that takes real deposits and tells subscribers what to copy is a financial service &mdash; and in the EU, copy-trading has a specific regulatory classification (see below) that decides whether this needs a license before launch, not after. This isn't a reason to slow down &mdash; it's the reason the build order at the end puts the legal-sensitive piece last.</div>
+
+<h1>What's Built So Far (v1, unchanged)</h1>
+<table>
+  <tr><th>Feature</th><th>Status</th></tr>
+  <tr><td>3D background canvas</td><td>Done &mdash; no changes proposed</td></tr>
+  <tr><td>Paper trading engine</td><td>Done &mdash; $100,000 mock balance, 6 instruments, live order book</td></tr>
+  <tr><td>Order execution</td><td>Done &mdash; Market/Limit orders, portfolio &amp; activity log</td></tr>
+  <tr><td>Accounts, real data, video, notifications, real money</td><td>Not built &mdash; all proposed below</td></tr>
+</table>
+
+<h1>Phase 2 Additions (Proposed)</h1>
+
+<h2>Video Call &amp; Communication Suite</h2>
+<p>Admin-hosted 1:1 consultations and/or group live-trading rooms, plus a direct-message support channel. Built on a hosted video provider (not raw WebRTC). A booking/scheduling flow is a separate piece this needs.</p>
+
+<h2>Trade Broadcast Notification System</h2>
+<p>The instant an admin executes a trade, subscribed users get an alert &mdash; in-app and/or push notification.</p>
+<div class="warn"><div class="warn-label">THE MOST IMPORTANT DECISION IN THIS DOCUMENT</div>EU regulators have published explicit guidance on this exact feature: if the platform automatically places the trade into a follower's account, that is legally &ldquo;portfolio management&rdquo; and requires a MiFID license &mdash; regardless of deposit size. If the system only notifies the user and a person manually places their own order, it does not trigger that classification.<br><br><b>Recommendation:</b> build this as notify-only by design. Automatic replication is a separate, later decision requiring its own legal review before any code is written for it.</div>
+
+<h2>Funded Tier &mdash; &euro;250 Minimum Deposit</h2>
+<p>A real-money tier alongside the existing free practice tier. Real deposits mean: (1) KYC becomes mandatory, not optional; (2) funds are routed through a licensed broker partner rather than held directly &mdash; self-custody needs $250,000+ in licensing, a partner avoids that; (3) since &euro; signals EU/UK users, the broker partner needs EU/UK regulatory coverage, not just US coverage.</p>
+
+<h1>Brand Identity (Retained &amp; Validated)</h1>
+<table>
+  <tr><th>Name</th><th>Trademark Risk</th></tr>
+  <tr><td>Apex Meridian</td><td>None &mdash; extends the existing name</td></tr>
+  <tr><td>Voidpoint Capital</td><td>None &mdash; original, matches existing design tokens</td></tr>
+  <tr><td>Lodestar Exchange</td><td>None &mdash; real historical navigation term</td></tr>
+</table>
+<p class="note">Logo shortlist: the Anchor, the Pulse/Sonar Orb, and the Chart + Starburst &mdash; all original marks, zero trademark exposure. (Names/logos with real trademark risk &mdash; GrandLine Capital, LogPose Financial, New World Capital, Pone Markets &mdash; were reviewed and excluded in the prior branding pass.)</p>
+
+<h1>Annual Pricing &amp; Financial Infrastructure</h1>
+<table>
+  <tr><th>Service</th><th>Responsible For</th><th>Est. Cost / Year</th></tr>
+  <tr><td>Supabase</td><td>Accounts, trade history, secure state</td><td>$0&ndash;300+ (scales with users)</td></tr>
+  <tr><td>Polygon.io</td><td>Unified stock/crypto/forex price feeds</td><td>$0&ndash;2,400</td></tr>
+  <tr><td>Daily.co (video, recommended)</td><td>Consultation &amp; live trading rooms</td><td>$0&ndash;3,000+ (free to 10,000 min/mo, then $0.004/min)</td></tr>
+  <tr><td>Agora (video, alternative)</td><td>Same, larger-scale alternative</td><td>$0&ndash;3,000+ (tiered, from $45.99/mo)</td></tr>
+  <tr><td>Stripe</td><td>Subscriptions and/or &euro;250 deposit processing</td><td>No fixed fee &mdash; 2.9% + $0.30/charge</td></tr>
+  <tr><td>Broker partner</td><td>Holding &amp; moving real client funds (funded tier)</td><td>Custom &mdash; quote once volume/jurisdiction known</td></tr>
+</table>
+<p class="note">Estimates as of this session &mdash; confirm current vendor pricing before budgeting.</p>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div>Supabase + Polygon.io + Daily.co + Stripe covers accounts, data, video, and billing with zero licensing exposure on their own. The broker partner for the funded tier is the one line item that's a business decision, not a vendor pick &mdash; get a quote and legal input on EU/UK coverage before committing.</div>
+
+<h1>Updated Stakeholder Discovery Questionnaire</h1>
+<p>Type your answer directly into the shaded box next to each question.</p>
+
+<h2>1. Trading Basics &amp; Asset Classes</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">1</td><td>Which asset classes are in scope for the funded tier?</td><td class="guidance">Stocks, crypto, forex &mdash; or a mix.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">2</td><td>Does the &euro;250 minimum apply platform-wide, or only to specific tiers/assets?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">3</td><td>Is &euro;250 a one-time minimum to open the tier, or also a minimum per top-up?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">4</td><td>Must practice-tier users graduate through a step before the funded tier?</td><td class="guidance">Or can they join the funded tier directly?</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>2. Video &amp; Communication Rules</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">5</td><td>One-on-one consultations, group live-trading rooms, or both?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">6</td><td>Who can host a room &mdash; only the admin, or designated staff too?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">7</td><td>Is scheduling self-serve, or admin-invited only?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">8</td><td>Should sessions be recorded?</td><td class="guidance">If yes: who can access recordings, for how long?</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>3. Trade Broadcast Notifications</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">9</td><td>Notify-only, or automatic replication into follower accounts?</td><td class="guidance">This answer decides whether MiFID licensing is required &mdash; a legal decision, not a preference.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">10</td><td>Which channels &mdash; in-app, push, email, SMS, or a mix?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">11</td><td>Does every trade broadcast, or only ones the admin flags for sharing?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">12</td><td>Do notifications include rationale/commentary, or just the raw fill?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>4. Look, Branding &amp; Data Security</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">13</td><td>Confirm final naming: Apex Meridian, Voidpoint Capital, or Lodestar Exchange?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">14</td><td>Confirm final logo: the anchor, the pulse/sonar orb, or the chart + starburst?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">15</td><td>EU users are now in scope &mdash; who is the GDPR data controller, and where is data stored?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">16</td><td>Any jurisdictions beyond the EU/UK planned for the funded tier?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h1>Recommended Build Sequence</h1>
+<ol>
+  <li>Accounts &amp; persistence (Supabase) &mdash; needed before everything else here.</li>
+  <li>Real market data (Polygon.io) &mdash; replaces the client-side random walk.</li>
+  <li>Notify-only trade broadcasting &mdash; explicitly not auto-replicating trades.</li>
+  <li>Video consulting (Daily.co) &mdash; 1:1 rooms first, group rooms once validated.</li>
+  <li>Funded tier (&euro;250 minimum) &mdash; only after a broker partner with EU/UK coverage is contracted, KYC is implemented, and legal has confirmed Question 9's answer doesn't trigger portfolio-management licensing.</li>
+</ol>
+<p class="note">Steps 1&ndash;4 are engineering-led. Step 5 is legal-led with engineering support &mdash; it should not start until Section 3, Question 9 has a confirmed answer.</p>
+
+</body>
+</html>

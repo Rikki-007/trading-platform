@@ -1,0 +1,165 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #22273; font-size: 11pt; line-height: 1.5; }
+  h1 { color: #16213E; font-size: 22pt; border-bottom: 2px solid #D9DEE6; padding-bottom: 6px; margin-top: 30px; }
+  h2 { color: #16213E; font-size: 15pt; margin-top: 22px; }
+  h3 { color: #B8860B; font-size: 12pt; margin-top: 14px; margin-bottom: 4px; }
+  p { color: #22273; }
+  .eyebrow { color: #B8860B; font-weight: bold; font-size: 13pt; letter-spacing: 1px; }
+  .title { color: #16213E; font-size: 30pt; font-weight: bold; margin: 4px 0 2px 0; }
+  .subtitle { color: #475569; font-style: italic; font-size: 13pt; margin-bottom: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px 0; }
+  th { background-color: #16213E; color: #FFFFFF; text-align: left; padding: 8px 10px; font-size: 10pt; border: 1px solid #16213E; }
+  td { border: 1px solid #D9DEE6; padding: 7px 10px; font-size: 10pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #F5F7FA; }
+  .meta-table td { border: none; padding: 3px 10px 3px 0; }
+  .meta-label { color: #475569; font-weight: bold; width: 140px; }
+  .answer { background-color: #FFF7DE; }
+  .guidance { color: #475569; font-style: italic; font-size: 9pt; }
+  .qnum { text-align: center; width: 24px; }
+  .rec { background-color: #E3F1E9; border: 1px solid #8FC9A6; padding: 12px 16px; margin: 4px 0 20px 0; }
+  .rec-label { color: #1F7A4D; font-weight: bold; font-size: 9pt; letter-spacing: 0.5px; }
+  .warn { background-color: #FBE4E4; border: 1px solid #E8A0A0; padding: 12px 16px; margin: 12px 0 20px 0; }
+  .warn-label { color: #B91C1C; font-weight: bold; font-size: 9pt; letter-spacing: 0.5px; }
+  .note { color: #475569; font-style: italic; font-size: 9.5pt; }
+  .riskflag { color: #B91C1C; font-weight: bold; }
+  .costnote { color: #475569; font-style: italic; font-size: 9pt; margin-top: -8px; }
+  ul, ol { margin-top: 4px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">MERIDIAN &mdash; PHASE 2</div>
+<div class="title">Phase 2 Report</div>
+<div class="subtitle">Feature scope, architecture, pricing, and stakeholder discovery</div>
+<table class="meta-table">
+  <tr><td class="meta-label">Date</td><td>September 3, 2026</td></tr>
+  <tr><td class="meta-label">Project</td><td>trading-platform (&ldquo;Meridian&rdquo;)</td></tr>
+  <tr><td class="meta-label">Status</td><td>v1 shipped (paper trading only). Sections 3.2&ndash;3.4 below are proposed, not built.</td></tr>
+</table>
+
+<h1>1. Executive Summary &amp; System Architecture</h1>
+<p>Meridian v1 is a Next.js 16 / React 19 app: Tailwind v4 for styling, Framer Motion for animation, and a Three.js / React Three Fiber 3D background canvas with a custom GLSL particle shader. That stack is unchanged and needs no rework for Phase 2 &mdash; the new features layer on top of it.</p>
+<p>Phase 2 proposes a <b>hybrid model</b>: the existing paper-trading demo, plus two new pillars &mdash; <b>live trade broadcasting</b> (subscribers notified the instant an admin executes a trade), <b>video consulting rooms</b> (admin-hosted 1:1 or group video sessions), and <b>a funded tier</b> (real deposits starting at &euro;250, alongside the existing free $100k practice mode).</p>
+<div class="warn"><div class="warn-label">READ THIS BEFORE SCOPING ANYTHING BELOW</div>Adding real deposits and trade broadcasting doesn't just add features &mdash; it changes what kind of business this is. A demo app with fake money is software. A platform that takes real deposits and tells subscribers what trades to copy is a <b>financial service</b>, and in the EU specifically, copy-trading has an established regulatory classification (Section 3.3) that determines whether this needs a licensed authorization before launch &mdash; not after. Nothing below is a reason not to build this; it's the reason to sequence it correctly, which Section 7 lays out.</div>
+
+<h1>2. What's Actually Built Today (v1 &mdash; unchanged)</h1>
+<p>For reference, so this report stands alone:</p>
+<ul>
+  <li>3D background canvas (compass-ring instrument, particle field, scroll/cursor parallax) &mdash; done.</li>
+  <li>Paper trading engine: 6 mock instruments, $100,000 mock starting balance, live order book, Market/Limit execution, portfolio + activity log &mdash; done.</li>
+  <li><b>Not built:</b> accounts/login, any data persistence, real market data, video, trade notifications, real money in any form.</li>
+</ul>
+
+<h1>3. Phase 2 &mdash; Proposed Feature Inventory</h1>
+
+<h2>3.1 3D Background Canvas &mdash; unchanged, already built</h2>
+<p>No changes proposed here. Carries over as-is.</p>
+
+<h2>3.2 Video Call &amp; Communication Suite &mdash; proposed</h2>
+<p><b>What it is:</b> admin/expert-hosted video consultations (1:1) and/or live trading rooms (group), plus a direct-message support channel.</p>
+<p><b>Architecture:</b> embed a hosted WebRTC provider rather than building signaling/TURN infrastructure from scratch.</p>
+<table>
+  <tr><th>Option</th><th>Fit</th></tr>
+  <tr><td>Daily.co</td><td>Simpler, flatter pricing (pure per-minute, no tiers); prebuilt embeddable UI components; fastest to ship a 1:1 or small-group room.</td></tr>
+  <tr><td>Agora</td><td>Stronger at very large scale / true one-to-many live-streaming; pricing is more tiered and requires picking a plan or credit pack.</td></tr>
+</table>
+<div class="rec"><div class="rec-label">RECOMMENDATION</div>Daily.co for launch &mdash; the pricing model alone (flat per-minute, free tier, no subscription commitment) removes a decision point, and its use case fits Daily's strength. Messaging/support: build on Supabase Realtime (already the database choice) rather than adding a third vendor. Scheduling needs its own subcomponent &mdash; a scheduling library or embedded tool (e.g. Cal.com).</div>
+
+<h2>3.3 Trade Broadcast Notification System &mdash; proposed</h2>
+<p><b>What it is:</b> the instant an admin/expert executes a trade, subscribed users get an alert &mdash; in-app and/or push.</p>
+<p><b>Architecture:</b> a websocket/realtime channel (Supabase Realtime again) for in-app alerts, plus a push layer (Web Push API, or OneSignal/Firebase Cloud Messaging if a mobile app is ever in scope).</p>
+<div class="warn"><div class="warn-label">THE MOST IMPORTANT COMPLIANCE FORK IN THIS DOCUMENT</div>EU regulators (ESMA, under MiFID II) have published explicit guidance on this exact feature: if the platform <b>automatically executes the trade into a follower's account</b>, that is legally &ldquo;portfolio management&rdquo; and requires MiFID authorization &mdash; full stop, regardless of deposit size. If instead the system <b>only notifies</b> the user and a person must manually decide to place their own order, it does <b>not</b> trigger that classification.<br><br><b>Recommendation:</b> build Phase 2 as notify-only, by design, not as a cost-cutting shortcut &mdash; auto-replication is a separate, later decision that needs its own legal engagement before a line of code is written for it.</div>
+
+<h2>3.4 Trading Dashboard &amp; Capital Tiers &mdash; proposed expansion</h2>
+<ul>
+  <li><b>Practice tier</b> &mdash; unchanged: $100,000 mock balance, no real money, no KYC.</li>
+  <li><b>Funded tier</b> &mdash; new: real deposits starting at <b>&euro;250 minimum</b>.</li>
+</ul>
+<p>Same custody principle as the original cost roadmap: route funds through a <b>licensed broker partner</b> rather than holding client money directly &mdash; self-custody requires licensing running into six figures, a licensed partner avoids that entirely.</p>
+<ul>
+  <li><b>KYC becomes mandatory</b> the moment a real deposit is possible &mdash; not optional, not later.</li>
+  <li>The <b>&euro; currency signals EU/UK users</b>, so the broker partner needs EU/UK regulatory coverage &mdash; a US-only partner isn't sufficient on its own.</li>
+  <li>Combined with 3.3: if funded-tier deposits are ever invested via automatic replication of the admin's trades, the MiFID portfolio-management trigger applies directly to this tier's money. Notify-only avoids it; auto-replication does not.</li>
+</ul>
+
+<h2>3.5 Order Execution &amp; Order Book &mdash; unchanged for practice tier</h2>
+<p>Already built and working for the mock/practice tier. For the funded tier, execution stops being an internal mock and becomes a real order routed to the broker partner's API &mdash; new integration work, not a UI change.</p>
+
+<h1>4. Brand Identity &amp; Trademark-Safe Names &amp; Logos (Retained &amp; Validated)</h1>
+<table>
+  <tr><th>Name</th><th>Trademark Risk</th></tr>
+  <tr><td>Apex Meridian</td><td>None &mdash; extends the existing name</td></tr>
+  <tr><td>Voidpoint Capital</td><td>None &mdash; original, matches existing design tokens</td></tr>
+  <tr><td>Lodestar Exchange</td><td>None &mdash; real historical navigation term</td></tr>
+</table>
+<p class="note">Names avoided: GrandLine Capital, LogPose Financial, New World Capital, Pone Markets &mdash; all draw on specific One Piece terms/artifacts, not generic language.</p>
+<p><b>Logo shortlist:</b> The Anchor &middot; The Pulse/Sonar Orb &middot; The Chart + Starburst &mdash; all original marks, zero trademark exposure.</p>
+
+<h1>5. Annual Pricing &amp; Financial Infrastructure</h1>
+<table>
+  <tr><th>Service</th><th>Responsible For</th><th>Est. Cost / Year</th><th>Recommended</th></tr>
+  <tr><td>Supabase</td><td>User accounts, trade history, secure state management</td><td>$0&ndash;300+ (scales with users)</td><td>&#10003;</td></tr>
+  <tr><td>Polygon.io</td><td>Unified stock/crypto/forex price feeds</td><td>$0&ndash;2,400</td><td>&#10003;</td></tr>
+  <tr><td>Daily.co (video)</td><td>Consultation &amp; live trading rooms</td><td>$0&ndash;3,000+ (free to 10,000 participant-min/mo, then $0.004/min)</td><td>&#10003;</td></tr>
+  <tr><td>Agora (video, alt.)</td><td>Same, larger-scale alternative</td><td>$0&ndash;3,000+ (tiered/subscription, from $45.99/mo)</td><td></td></tr>
+  <tr><td>Stripe</td><td>Subscriptions and/or &euro;250 deposit processing</td><td>No fixed fee &mdash; 2.9% + $0.30/charge</td><td>&#10003;</td></tr>
+  <tr><td>Broker partner (funded tier)</td><td>Actually holding &amp; moving real client funds</td><td>Custom &mdash; quote once volume/jurisdiction known</td><td>&#10003;</td></tr>
+  <tr><td>Holding funds directly</td><td>Same, without a partner</td><td>$250,000+ in licensing before legally possible</td><td></td></tr>
+</table>
+<p class="costnote">Estimates as of this session &mdash; confirm current vendor pricing before budgeting.</p>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div>Supabase + Polygon.io + Daily.co + Stripe covers accounts, data, video, and subscription billing with zero licensing exposure on their own. The only line item that turns into a business decision rather than a vendor choice is the broker partner for the funded tier &mdash; get a quote and legal input on EU/UK coverage before committing.</div>
+
+<h1>6. Updated Stakeholder Discovery Questionnaire</h1>
+
+<h2>6.1 Trading Basics &amp; Asset Classes</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">1</td><td>Which asset classes are in scope for the funded tier?</td><td class="guidance">Stocks, crypto, forex &mdash; or a mix.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">2</td><td>Does the &euro;250 minimum apply platform-wide, or only to specific tiers/assets?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">3</td><td>Is &euro;250 a one-time minimum to open the tier, or also a minimum per top-up?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">4</td><td>Must practice-tier users graduate through a step before the funded tier?</td><td class="guidance">Or can they join the funded tier directly?</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>6.2 Video &amp; Communication Rules</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">5</td><td>One-on-one consultations, group live-trading rooms, or both?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">6</td><td>Who can host a room &mdash; only the admin, or designated staff too?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">7</td><td>Is scheduling self-serve, or admin-invited only?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">8</td><td>Should sessions be recorded?</td><td class="guidance">If yes: who can access recordings, for how long?</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>6.3 Trade Broadcast Notifications</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">9</td><td>Notify-only, or automatic replication into follower accounts?</td><td class="guidance">This answer decides whether MiFID licensing is required &mdash; a legal decision, not a preference.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">10</td><td>Which channels &mdash; in-app, push, email, SMS, or a mix?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">11</td><td>Does every trade broadcast, or only ones the admin flags for sharing?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">12</td><td>Do notifications include rationale/commentary, or just the raw fill?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>6.4 Look, Branding &amp; Data Security</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">13</td><td>Confirm final naming: Apex Meridian, Voidpoint Capital, or Lodestar Exchange?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">14</td><td>Confirm final logo: the anchor, the pulse/sonar orb, or the chart + starburst?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">15</td><td>EU users are now in scope &mdash; who is the GDPR data controller, and where is data stored?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">16</td><td>Any jurisdictions beyond the EU/UK planned for the funded tier?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h1>7. Recommended Build Sequence</h1>
+<ol>
+  <li><b>Accounts &amp; persistence (Supabase)</b> &mdash; needed before anything else in this report.</li>
+  <li><b>Real market data (Polygon.io)</b> &mdash; replaces the client-side random walk.</li>
+  <li><b>Notify-only trade broadcasting</b> &mdash; in-app + push, built on Supabase Realtime; explicitly not auto-replicating trades.</li>
+  <li><b>Video consulting (Daily.co)</b> &mdash; 1:1 rooms first, group rooms once 1:1 is validated.</li>
+  <li><b>Funded tier (&euro;250 minimum)</b> &mdash; only after a broker partner with EU/UK coverage is contracted, KYC is implemented, and legal has confirmed the notify-only broadcast design doesn't trigger portfolio-management authorization for the jurisdictions in scope.</li>
+</ol>
+<p class="note">Steps 1&ndash;4 are engineering-led. Step 5 is legal-led with engineering support &mdash; it should not start until Section 6.3, Question 9 has a confirmed answer.</p>
+
+</body>
+</html>

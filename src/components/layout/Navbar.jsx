@@ -2,25 +2,35 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Compass, Wallet } from "lucide-react";
+import { Compass, Wallet, User, LogOut } from "lucide-react";
 import { useMarket } from "@/lib/MarketProvider";
 import { formatCurrency } from "@/lib/market";
+import { signOut } from "@/lib/auth/actions";
 
 const LINKS = [
   { href: "#dashboard", label: "Dashboard" },
   { href: "#markets", label: "Markets" },
   { href: "#trade", label: "Trade" },
+  { href: "#live", label: "Live" },
 ];
 
 export default function Navbar() {
   const { equity } = useMarket();
   const [scrolled, setScrolled] = useState(false);
+  const [me, setMe] = useState(undefined); // undefined = loading, null = signed out
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((r) => r.json())
+      .then((data) => setMe(data.user))
+      .catch(() => setMe(null));
   }, []);
 
   return (
@@ -66,6 +76,27 @@ export default function Navbar() {
               {formatCurrency(equity, { compact: true })}
             </span>
           </div>
+
+          {me ? (
+            <form action={signOut}>
+              <button
+                type="submit"
+                title={me.email}
+                className="flex items-center gap-1.5 rounded-full border border-hairline bg-navy/50 px-3 py-1.5 text-xs text-mist transition-colors hover:text-porcelain"
+              >
+                <LogOut className="h-3.5 w-3.5" strokeWidth={1.75} />
+                <span className="hidden sm:inline">Sign out</span>
+              </button>
+            </form>
+          ) : me === null ? (
+            <a
+              href="/login"
+              className="flex items-center gap-1.5 rounded-full border border-hairline bg-navy/50 px-3 py-1.5 text-xs text-mist transition-colors hover:text-porcelain"
+            >
+              <User className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <span className="hidden sm:inline">Sign in</span>
+            </a>
+          ) : null}
         </div>
       </div>
     </motion.header>

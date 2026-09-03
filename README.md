@@ -82,8 +82,77 @@ random data.
 
 ## Known simplifications (by design, for a v1)
 
-- Portfolio state is in-memory only — no persistence, no auth, no backend.
+- The practice-tier paper trading engine (`MarketProvider`) is in-memory only
+  when unauthenticated — no persistence for anonymous visitors.
 - Limit orders check fill eligibility once at submission time rather than
   resting in an order book until matched.
 - Selling is long-only (no short positions) and clamps to what you actually
   hold.
+
+---
+
+## Phase 2 — accounts, payments, live data, video, broadcasts
+
+Everything below is real, working code — not a mockup — but every integration
+is **inert until you configure it**. With no environment variables set, the
+app builds and runs exactly like v1: the paper-trading demo works, nothing
+else is reachable, and no page crashes because a service isn't configured.
+See `MERIDIAN_PHASE2_REPORT.md` for the product/architecture rationale behind
+each piece, and the compliance note below before touching `PAYMENTS_LIVE_MODE`.
+
+### Setup
+
+1. **Copy the env template:** `cp .env.example .env.local` and fill in real
+   values for whichever services you're turning on (see the comments in that
+   file for where each key comes from — you don't need all of them at once).
+2. **Create the database:** in your Supabase project's SQL Editor, run
+   `supabase/migrations/0001_init.sql`. This creates every table (`profiles`,
+   `wallets`, `positions`, `trades`, `promo_codes`, `promo_redemptions`,
+   `deposits`, `broadcasts`), Row Level Security policies, the
+   `STARTBOOST` promo code, and the signup trigger that provisions a
+   profile + wallet for every new auth user.
+3. **Grant an admin:** video-room hosting and trade broadcasting are
+   admin-only. After your first signup, run this once in the SQL Editor:
+   `update public.profiles set is_admin = true where email = 'you@example.com';`
+4. **Enable OAuth providers** (optional): Google/Apple sign-in need to be
+   turned on and configured in Supabase Dashboard → Authentication →
+   Providers — that's Supabase/Google/Apple configuration, not code here.
+
+### What each piece does
+
+| Area | Key files |
+|---|---|
+| Auth | `src/lib/supabase/`, `middleware.js`, `src/app/login`, `src/app/signup`, `src/app/auth/callback` |
+| Onboarding & promo codes | `src/app/onboarding`, `src/lib/promo/`, `src/app/api/promo/redeem` |
+| Payments (Stripe) | `src/lib/stripe/`, `src/app/api/stripe/checkout`, `src/app/api/stripe/webhook` |
+| Live market data (Polygon.io) | `src/lib/market/polygon.js`, `src/app/api/market/quotes`, `src/components/trading/LiveMarketsPanel.jsx` |
+| Video consulting (Daily.co) | `src/lib/video/daily.js`, `src/app/api/video/rooms`, `src/app/api/video/join`, `src/components/video/` |
+| Trade broadcasts (notify-only) | `src/app/api/broadcast`, `src/lib/notifications/useBroadcastFeed.js`, `src/components/notifications/BroadcastFeed.jsx` |
+
+### ⚠️ Before setting `PAYMENTS_LIVE_MODE=true`
+
+The Stripe webhook (`src/app/api/stripe/webhook/route.js`) records every
+completed deposit for audit purposes regardless of this flag, but only
+credits `wallets.live_balance_cents` — a real, spendable balance — when
+`PAYMENTS_LIVE_MODE` is explicitly `"true"`. With it unset/false, deposits
+run safely against Stripe in test mode with no real money ever becoming
+spendable.
+
+Turning it on makes this platform directly hold client funds, which
+`MERIDIAN_PHASE2_REPORT.md` (Sections 3.4 and 5) recommends against — the
+report's advice is to route real deposits through a licensed broker partner
+instead, since self-custody requires $250,000+ in money-transmitter/
+broker-dealer licensing. Don't flip this flag until that decision has
+actually been made, ideally with legal input specific to your target
+jurisdictions.
+
+### Trade broadcasts are notify-only, on purpose
+
+`src/app/api/broadcast/route.js` inserts a row that every signed-in client
+sees in real time — it never places an order in anyone else's account. Per
+EU ESMA guidance under MiFID II, automatically replicating a trade into
+follower accounts is legally "portfolio management" and requires a license
+this platform doesn't have; a notify-only alert does not trigger that
+classification. If you ever want auto-replication, that's a legal
+conversation before it's an engineering one — see
+`MERIDIAN_PHASE2_REPORT.md` Section 3.3.

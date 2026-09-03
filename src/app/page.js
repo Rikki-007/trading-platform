@@ -15,6 +15,9 @@ import PriceChart from "@/components/trading/PriceChart";
 import OrderBook from "@/components/trading/OrderBook";
 import TradeExecution from "@/components/trading/TradeExecution";
 import ActivityLog from "@/components/trading/ActivityLog";
+import LiveMarketsPanel from "@/components/trading/LiveMarketsPanel";
+import VideoConsultingPanel from "@/components/video/VideoConsultingPanel";
+import BroadcastFeed from "@/components/notifications/BroadcastFeed";
 import { formatCurrency, STARTING_CASH } from "@/lib/market";
 
 // Three.js touches `window` on import, and a WebGL context has nothing to
@@ -144,6 +147,22 @@ function DashboardExperience() {
         <section id="activity" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="History" title="Recent activity" />
           <ActivityLog />
+        </section>
+
+        {/* -------------------------------------------------------------- LIVE */}
+        <section id="live" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Phase 2"
+            title="Live data, consulting & broadcasts"
+            description="Real market prices, admin-hosted video rooms, and notify-only trade broadcasts — each inert until its own service is configured (see .env.example)."
+          />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <LiveMarketsPanel />
+            <VideoConsultingPanel />
+            <div className="lg:col-span-2">
+              <BroadcastFeed />
+            </div>
+          </div>
         </section>
       </main>
 

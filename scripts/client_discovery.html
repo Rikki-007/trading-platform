@@ -1,0 +1,165 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #22273; font-size: 11pt; line-height: 1.5; }
+  h1 { color: #16213E; font-size: 22pt; border-bottom: 2px solid #D9DEE6; padding-bottom: 6px; margin-top: 30px; }
+  h2 { color: #16213E; font-size: 15pt; margin-top: 22px; }
+  p { color: #22273; }
+  .eyebrow { color: #B8860B; font-weight: bold; font-size: 13pt; letter-spacing: 1px; }
+  .title { color: #16213E; font-size: 30pt; font-weight: bold; margin: 4px 0 2px 0; }
+  .subtitle { color: #475569; font-style: italic; font-size: 13pt; margin-bottom: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px 0; }
+  th { background-color: #16213E; color: #FFFFFF; text-align: left; padding: 8px 10px; font-size: 10pt; border: 1px solid #16213E; }
+  td { border: 1px solid #D9DEE6; padding: 7px 10px; font-size: 10pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #F5F7FA; }
+  .meta-table td { border: none; padding: 3px 10px 3px 0; }
+  .meta-label { color: #475569; font-weight: bold; width: 140px; }
+  .answer { background-color: #FFF7DE; }
+  .guidance { color: #475569; font-style: italic; font-size: 9pt; }
+  .qnum { text-align: center; width: 24px; }
+  .rec { background-color: #E3F1E9; border: 1px solid #8FC9A6; padding: 12px 16px; margin: 4px 0 20px 0; }
+  .rec-label { color: #1F7A4D; font-weight: bold; font-size: 9pt; letter-spacing: 0.5px; }
+  .note { color: #475569; font-style: italic; font-size: 9.5pt; }
+  ul { margin-top: 4px; }
+  li { margin-bottom: 4px; }
+  .riskflag { color: #B91C1C; font-weight: bold; }
+  .costnote { color: #475569; font-style: italic; font-size: 9pt; margin-top: -8px; }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">MERIDIAN</div>
+<div class="title">Client Discovery &amp; Requirements</div>
+<div class="subtitle">A short summary of what's built, plus questions we need answered</div>
+<table class="meta-table">
+  <tr><td class="meta-label">Date</td><td>September 3, 2026</td></tr>
+  <tr><td class="meta-label">Project</td><td>trading-platform (&ldquo;Meridian&rdquo;)</td></tr>
+  <tr><td class="meta-label">Purpose</td><td>Confirm what's built, gather your answers, plan next steps</td></tr>
+</table>
+
+<h1>Quick Summary</h1>
+<p>We've built a working demo of a trading app. It's fully practice-only &mdash; no real market data, no real accounts, no real money. Everything resets when you refresh the page. Before building the next phase (real data, real accounts, maybe real money), we need your answers to a few questions &mdash; see below.</p>
+
+<h1>What's Built So Far</h1>
+<table>
+  <tr><th>Feature</th><th>What it does</th></tr>
+  <tr><td>3D background</td><td>A moving, glowing 3D scene that reacts to your mouse and scrolling.</td></tr>
+  <tr><td>Trading dashboard</td><td>6 practice stocks with live-moving prices, starting with $100,000 in fake money.</td></tr>
+  <tr><td>Buy &amp; sell</td><td>A working order form (Market and Limit orders) that actually updates your balance.</td></tr>
+  <tr><td>Order book</td><td>A live list of fake buy/sell offers around the current price.</td></tr>
+  <tr><td>Portfolio &amp; history</td><td>Shows your cash, holdings, gains/losses, and every trade you've made.</td></tr>
+  <tr><td>Design</td><td>Dark theme, cyan/gold/red accents, smooth animations throughout.</td></tr>
+</table>
+<p class="note">Not built yet: a scrolling price ticker and a &ldquo;system status&rdquo; light were mentioned early on, but they're not in the app. Simple to add later &mdash; just being upfront.</p>
+
+<h1>Questions For You</h1>
+<p>Type your answer directly into the shaded box next to each question.</p>
+
+<h2>1. Trading Basics</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">1</td><td>What should people trade &mdash; stocks, options, crypto, forex?</td><td class="guidance">Changes what data/broker we need.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">2</td><td>Stay practice-only, or add real money later?</td><td class="guidance">Real money needs a broker partner and legal review.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">3</td><td>What order types beyond Buy/Sell (Market/Limit)?</td><td class="guidance">e.g. stop-loss, trailing stop.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">4</td><td>Should users be able to short-sell or use leverage?</td><td class="guidance">Not in the app today.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">5</td><td>Who is this for?</td><td class="guidance">e.g. beginners, active traders, a specific group.</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>2. Account Rules</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">6</td><td>Should everyone start with $100,000, or should it vary?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">7</td><td>Do we need margin (borrowing to trade)?</td><td class="guidance">If yes, what are the limits?</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">8</td><td>Should there be daily loss limits?</td><td class="guidance">Useful for teaching, less so for pure practice.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">9</td><td>Do you want leaderboards or competitions?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>3. Look &amp; Branding</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">10</td><td>Does the current dark/glowing style feel right?</td><td class="guidance">Or more plain/corporate, or more playful?</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">11</td><td>Do you have an existing logo or brand to use?</td><td class="guidance">Or keep building on &ldquo;Meridian&rdquo;?</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">12</td><td>Any language or accessibility needs?</td><td class="guidance">Easier to plan now than change later.</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h2>Brand Name Options</h2>
+<table>
+  <tr><th>Name</th><th>Vibe</th><th>Trademark Risk</th></tr>
+  <tr><td>New World Capital (NWC)</td><td>Clean, institutional, ambitious</td><td class="riskflag">High &mdash; &ldquo;New World&rdquo; is a major named region in One Piece</td></tr>
+  <tr><td>Lodestar Exchange</td><td>Sharp, technical, celestial-navigation feel</td><td>None &mdash; &ldquo;lodestar&rdquo; is a real historical navigation term</td></tr>
+  <tr><td>Pone Markets</td><td>Cryptic, ancient-records feel</td><td class="riskflag">High &mdash; reads as a shortened nod to &ldquo;Poneglyph,&rdquo; a specific One Piece artifact</td></tr>
+  <tr><td>Logix Terminal</td><td>Routing instruments + quant-trading blend</td><td>Low &mdash; &ldquo;log&rdquo; (ship's log) is genuine maritime vocabulary, not exclusive to One Piece</td></tr>
+  <tr><td>Rookwood Systems</td><td>Dark, industrial, mysterious</td><td>None &mdash; no identifiable tie to the source material</td></tr>
+  <tr><td>Grand Horizon Trading</td><td>Expansive, boundless</td><td>Low&ndash;moderate &mdash; &ldquo;Grand&rdquo; echoes &ldquo;Grand Line&rdquo;; safer than the exact phrase, still worth a quick trademark search</td></tr>
+  <tr><td>Voidpoint Capital</td><td>Minimalist, dark-mode native</td><td>None &mdash; original, and matches your existing &ldquo;void&rdquo; design tokens</td></tr>
+  <tr><td>Apex Meridian</td><td>Peak performance, builds on the current name</td><td>None &mdash; extends your existing, already-clear name</td></tr>
+</table>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div><b>Recommendation:</b> Voidpoint Capital and Apex Meridian are the strongest picks &mdash; zero trademark exposure and both tie into work already done (the void-black design tokens, and the existing Meridian branding across the codebase). Lodestar Exchange and Rookwood Systems are also clean if you want more distance from &ldquo;Meridian.&rdquo; <b>Solution:</b> avoid New World Capital and Pone Markets without legal clearance &mdash; both draw on specific One Piece terms/artifacts, not generic language. Treat Grand Horizon Trading as medium caution rather than a hard no.</div>
+
+<h2>Logo Concept Directions</h2>
+<p>12 directions were sketched, grouped by theme:</p>
+<ul>
+  <li><b>Compass / star marks</b> &mdash; a spiked compass rose or star-burst, sometimes paired with a monogram, an infinity loop, or a dart shape. Abstract, reads as &ldquo;navigation,&rdquo; no IP risk.</li>
+  <li><b>Anchor</b> &mdash; a stylized anchor with curved horns. Nautical and premium-looking.</li>
+  <li><b>Ship's wheel + hat</b> &mdash; a steering wheel with a hat resting on top. Leans close to a specific pirate-captain silhouette &mdash; a style caution, not a hard trademark issue.</li>
+  <li><b>Skull &amp; crossbones with a straw hat</b> &mdash; <span class="riskflag">this one directly mirrors the Straw Hat Pirates' Jolly Roger from One Piece. Do not use this commercially.</span></li>
+  <li><b>Skull &amp; crossbones, no hat</b> &mdash; a generic pirate skull mark. No specific IP tie, but a skull is an odd signal of trust for a trading platform.</li>
+  <li><b>Pulse / sonar orb</b> &mdash; concentric rings around a glowing core. Reads as &ldquo;live data,&rdquo; fits a trading dashboard well.</li>
+  <li><b>Chart + starburst</b> &mdash; a rising connected-dot line with a star at the peak. Ties directly to trading, not just the nautical theme.</li>
+</ul>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div><b>Recommendation:</b> shortlist the anchor, the pulse/sonar orb, and the chart+starburst mark. <b>Solution:</b> all three are original, read as &ldquo;finance + navigation,&rdquo; and carry zero trademark risk. Drop the skull-and-crossbones-with-hat mark entirely &mdash; it's a near-direct copy of a copyrighted character's emblem.</div>
+
+<h2>4. Accounts &amp; Data</h2>
+<table>
+  <tr><th style="width:36px">No.</th><th>Question</th><th>Guidance</th><th>Your Answer</th></tr>
+  <tr><td class="qnum">13</td><td>How should people log in?</td><td class="guidance">e.g. email, Google, Apple, wallet.</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">14</td><td>Keep trade history forever, or just for a while?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">15</td><td>Does user data need to stay in a specific country?</td><td class="guidance">&nbsp;</td><td class="answer">&nbsp;</td></tr>
+  <tr><td class="qnum">16</td><td>Should progress sync across devices?</td><td class="guidance">Needs a real server, not just the browser.</td><td class="answer">&nbsp;</td></tr>
+</table>
+
+<h1>What's Next: Options &amp; Recommendations</h1>
+<p>Three things to build next, in order. For each, here are the choices and our pick.</p>
+
+<h2>1. Real market prices</h2>
+<table>
+  <tr><th>Option</th><th>Responsible For</th><th>Est. Cost / Year</th><th>Recommended</th></tr>
+  <tr><td>Polygon.io</td><td>Live stock, crypto &amp; forex prices in one feed</td><td>$0&ndash;2,400</td><td>&#10003;</td></tr>
+  <tr><td>Alpaca (Market Data)</td><td>Live prices &mdash; best if also using Alpaca for trades</td><td>$0&ndash;1,200</td><td></td></tr>
+  <tr><td>Alpha Vantage</td><td>Live prices &mdash; fine for testing only</td><td>$0&ndash;3,000</td><td></td></tr>
+  <tr><td>Binance</td><td>Crypto prices only</td><td>$0 (per-trade fees apply, no subscription)</td><td></td></tr>
+</table>
+<p class="costnote">Estimates as of this session &mdash; confirm current pricing before budgeting.</p>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div><b>Recommendation:</b> Polygon.io. <b>Solution:</b> one paid plan covers stocks, crypto, and forex, so the app pulls every live price from a single vendor instead of stitching three together.</div>
+
+<h2>2. Real accounts &amp; login</h2>
+<table>
+  <tr><th>Option</th><th>Responsible For</th><th>Est. Cost / Year</th><th>Recommended</th></tr>
+  <tr><td>Supabase</td><td>Login + saving accounts, trades, positions</td><td>$0&ndash;300+ (scales with users)</td><td>&#10003;</td></tr>
+  <tr><td>Firebase</td><td>Same job, different database style</td><td>$0&ndash;1,200 (scales with users)</td><td></td></tr>
+  <tr><td>Build it ourselves</td><td>Same job, fully custom</td><td>$240&ndash;1,200 hosting, plus real developer time</td><td></td></tr>
+</table>
+<p class="costnote">Estimates as of this session &mdash; confirm current pricing before budgeting.</p>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div><b>Recommendation:</b> Supabase. <b>Solution:</b> it hands us login and a database in one, and its data model fits trades/positions naturally &mdash; the one place we're not paying to rebuild something that already exists.</div>
+
+<h2>3. Payments</h2>
+<table>
+  <tr><th>Use Case</th><th>Responsible For</th><th>Est. Cost / Year</th><th>Recommended</th></tr>
+  <tr><td>Paid subscriptions (no real trading)</td><td>Charging users for premium features</td><td>No fixed fee &mdash; 2.9% + $0.30 per charge</td><td>&#10003;</td></tr>
+  <tr><td>Real-money stock trading</td><td>Actually holding &amp; moving client funds</td><td>Custom &mdash; ask the broker for a quote</td><td></td></tr>
+  <tr><td>Real-money crypto trading</td><td>Same, for crypto</td><td>Custom &mdash; ask the provider for a quote</td><td></td></tr>
+  <tr><td>Holding money ourselves</td><td>Same, without a partner</td><td>$250,000+ in licensing before we could legally start</td><td></td></tr>
+</table>
+<p class="costnote">Estimates as of this session &mdash; confirm current pricing before budgeting.</p>
+<div class="rec"><div class="rec-label">RECOMMENDATION &amp; SOLUTION</div><b>Recommendation:</b> Stripe for any paid tier now; a licensed broker partner if/when real trading is confirmed. <b>Solution:</b> Stripe needs no license and takes a small cut per charge; a broker partner holds real client money so we never need the $250K+ licensing that holding funds ourselves would require.</div>
+
+<h1>Next Steps</h1>
+<ul>
+  <li>Fill in the questions above and send this back to us.</li>
+  <li>We'll confirm the plan based on your answers.</li>
+  <li>If you want real-money trading, we'll set up a separate legal/compliance conversation before building that part.</li>
+</ul>
+
+</body>
+</html>
