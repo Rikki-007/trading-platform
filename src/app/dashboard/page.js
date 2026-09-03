@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TrendingUp, ArrowLeftRight, GraduationCap, Video, Headset, ArrowUpRight } from "lucide-react";
+import { Radio, LineChart, Headset, ArrowUpRight } from "lucide-react";
 import SectionHeading from "@/components/layout/SectionHeading";
 import BroadcastFeed from "@/components/notifications/BroadcastFeed";
 
@@ -7,54 +7,43 @@ export const metadata = { title: "Dashboard — Lodestar Meridian Exchange" };
 
 const QUICK_LINKS = [
   {
-    href: "/markets",
-    label: "Markets",
-    icon: TrendingUp,
-    description: "Browse instruments and live-feeling charts.",
+    href: "/live-trading",
+    label: "Live Trading",
+    icon: Radio,
+    description: "Real market data via Polygon.io, and broker execution once it's connected.",
   },
   {
-    href: "/trade",
-    label: "Trade",
-    icon: ArrowLeftRight,
-    description: "Execute a simulated order against your practice capital.",
+    href: "/virtual-trading",
+    label: "Virtual Trading",
+    icon: LineChart,
+    description: "Your $100,000 practice account — pick a symbol, place an order, review every fill.",
   },
   {
-    href: "/training",
-    label: "Training",
-    icon: GraduationCap,
-    description: "Your $100,000 practice account, portfolio, and fill history.",
-  },
-  {
-    href: "/meeting",
-    label: "Online Meeting",
-    icon: Video,
-    description: "Book or join a 1:1 video consultation with an admin.",
-  },
-  {
-    href: "/coaching",
-    label: "Train with Expert",
+    href: "/mentorship",
+    label: "Mentorship",
     icon: Headset,
-    description: "Live-trade alongside an admin-hosted coaching session.",
+    description: "Book a 1:1 consultation or join a live expert-hosted trading room.",
   },
 ];
 
 /**
  * The signed-in home base — an overview and a set of quick links into the
- * actual modules, not a duplicate of any one of them. The $100,000 practice
- * account itself (portfolio, positions, fill history) lives entirely on
- * /training; this page just points to it, same as it points to every other
- * module, so nothing about the practice capital is tracked in two places.
+ * three other main tabs, not a duplicate of any one of them. The $100,000
+ * practice account itself (portfolio, positions, fill history) lives
+ * entirely on /virtual-trading; this page just points to it, same as it
+ * points to Live Trading and Mentorship, so nothing about the practice
+ * capital is tracked in two places.
  */
 export default function DashboardPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <SectionHeading
-        eyebrow="Dashboard"
+        eyebrow="Main Dashboard"
         title="Your home base"
-        description="Everything on Meridian starts here — jump into practice trading, browse markets, or connect with an expert."
+        description="Everything on Meridian starts here — jump into practice trading, check real market data, or connect with an expert."
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {QUICK_LINKS.map(({ href, label, icon: Icon, description }) => (
           <Link
             key={href}

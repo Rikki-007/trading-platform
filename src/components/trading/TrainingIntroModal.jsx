@@ -16,19 +16,17 @@ const POINTS = [
   },
   {
     icon: LineChart,
-    text: "Pick an instrument on Markets, then fill a real order against it on Trade — prices move on a live-feeling simulated feed.",
+    text: "Pick an instrument below, then fill a real order against it — prices move on a live-feeling simulated feed.",
   },
   {
     icon: ShieldCheck,
-    text: "Your equity, positions, and every fill are tracked right here on Training, so you can review the whole history anytime.",
+    text: "Your equity, positions, and every fill are tracked right here, so you can review the whole history anytime — and reset your balance for a clean start whenever you want.",
   },
 ];
 
 /**
- * A one-time walkthrough for first-time visitors to the practice-trading
- * module (Training + Trade share it — same localStorage flag either way,
- * so it only ever shows once regardless of which page someone lands on
- * first). Deliberately short: three lines, not a wall of text, so it's
+ * A one-time walkthrough for first-time visitors to the Virtual Trading
+ * page. Deliberately short: three lines, not a wall of text, so it's
  * skimmable in a few seconds rather than something people reflexively
  * click past.
  *

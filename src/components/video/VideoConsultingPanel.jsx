@@ -14,10 +14,10 @@ import VideoRoom from "./VideoRoom";
  * profiles.is_admin) rather than trusted from a prop — this component can
  * be dropped anywhere without a server-component parent to feed it one.
  *
- * `mode` scopes which admin start-buttons render, so the same panel can be
- * dropped on both /meeting ("consultation" — 1:1 booking) and /coaching
- * ("coaching" — group live-trading room) and only show the button relevant
- * to that page. Defaults to "both" for any other embed.
+ * `mode` scopes which admin start-buttons render — /mentorship renders this
+ * with mode="both" so every visitor sees both the 1:1 "consultation" and
+ * group "coaching" start-buttons in one place. Kept configurable in case a
+ * future page wants to embed just one.
  */
 export default function VideoConsultingPanel({ mode = "both" }) {
   const showConsultation = mode === "consultation" || mode === "both";

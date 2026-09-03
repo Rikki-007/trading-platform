@@ -1,14 +1,12 @@
 import { redirect } from "next/navigation";
 
 /**
- * /live used to host live market data, video consulting, and trade
- * broadcasts all on one page. That content now lives on dedicated routes:
- * real market data moved to /markets (see LiveMarketsPanel there), and video
- * consulting split into /meeting (1:1 consultation booking) and /coaching
- * (expert-hosted live-trading rooms), each pairing VideoConsultingPanel with
- * whatever else is relevant there. This redirect exists so an old bookmark
- * or external link to /live still lands somewhere real instead of a 404.
+ * /live has meant a few different things across earlier revisions of this
+ * app (a catch-all page, then a consulting-focused one). Now that "Live
+ * Trading" is an established nav tab with its own route, redirecting the
+ * bare /live path there is the least surprising outcome for anyone who
+ * still has it bookmarked — see src/app/live-trading/page.js.
  */
 export default function LivePage() {
-  redirect("/meeting");
+  redirect("/live-trading");
 }

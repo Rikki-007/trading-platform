@@ -134,6 +134,20 @@ export function MarketProvider({ children }) {
     setEquityHistory((h) => [...h.slice(-59), equity]);
   }, [equity]);
 
+  /**
+   * Wipes the practice account back to a fresh $100,000 start — cash,
+   * positions, fill history, and the equity sparkline all reset together so
+   * nothing stale (a leftover position, an old equity point) survives a
+   * reset. Purely local state, so this is free and instant; nothing server-
+   * side to call.
+   */
+  const resetAccount = useCallback(() => {
+    setCash(STARTING_CASH);
+    setPositions({});
+    setTrades([]);
+    setEquityHistory([STARTING_CASH]);
+  }, []);
+
   const value = useMemo(
     () => ({
       instruments: INSTRUMENTS,
@@ -146,8 +160,9 @@ export function MarketProvider({ children }) {
       equityHistory,
       marketMood,
       executeTrade,
+      resetAccount,
     }),
-    [quotes, cash, positions, trades, holdingsValue, equity, equityHistory, marketMood, executeTrade]
+    [quotes, cash, positions, trades, holdingsValue, equity, equityHistory, marketMood, executeTrade, resetAccount]
   );
 
   return <MarketContext.Provider value={value}>{children}</MarketContext.Provider>;

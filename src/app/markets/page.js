@@ -1,28 +1,13 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import SectionHeading from "@/components/layout/SectionHeading";
-import PriceChart from "@/components/trading/PriceChart";
-import Watchlist from "@/components/trading/Watchlist";
-import LiveMarketsPanel from "@/components/trading/LiveMarketsPanel";
-import { useSelection } from "@/lib/SelectionProvider";
-
+/**
+ * The simulated instrument picker (PriceChart + Watchlist) that used to
+ * live here moved to /virtual-trading, consolidated alongside execution and
+ * the portfolio — see src/app/virtual-trading/page.js. Real market data
+ * (LiveMarketsPanel) moved to /live-trading instead, since it belongs with
+ * the real-market side of the platform, not the practice one. This
+ * redirect exists so an old bookmark or link still lands somewhere real.
+ */
 export default function MarketsPage() {
-  const { selectedSymbol, setSelectedSymbol } = useSelection();
-
-  return (
-    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <SectionHeading
-        eyebrow="Markets"
-        title="Pick an instrument"
-        description="Select anything below to load it into the order book and execution panel on the Trade page. Real market data — separate from the practice-tier instruments — sits alongside it."
-      />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
-        <div className="space-y-4">
-          <PriceChart symbol={selectedSymbol} />
-          <Watchlist selectedSymbol={selectedSymbol} onSelect={setSelectedSymbol} />
-        </div>
-        <LiveMarketsPanel />
-      </div>
-    </div>
-  );
+  redirect("/virtual-trading");
 }

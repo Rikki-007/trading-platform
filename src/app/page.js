@@ -11,8 +11,8 @@ import { formatCurrency, STARTING_CASH } from "@/lib/market";
 
 /**
  * The home route — hero branding and the four feature cards, nothing else.
- * Every other module (dashboard, markets, trade, training, live) now lives
- * on its own route under src/app/*.
+ * Every other module (dashboard, live trading, virtual trading, mentorship)
+ * now lives on its own route under src/app/*.
  */
 export default function HomePage() {
   const { ready } = useAppReveal();
@@ -51,14 +51,14 @@ export default function HomePage() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
-              href="/training"
+              href="/virtual-trading"
               className="group inline-flex items-center gap-2 rounded-full bg-cyan px-5 py-2.5 text-sm font-semibold text-void-deep transition-transform hover:scale-[1.02]"
             >
               Enter the terminal
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
             </a>
             <a
-              href="/markets"
+              href="/live-trading"
               className="inline-flex items-center gap-2 rounded-full border border-hairline-strong px-5 py-2.5 text-sm text-porcelain transition-colors hover:bg-navy-light"
             >
               Browse markets

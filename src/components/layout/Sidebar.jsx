@@ -3,21 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, GraduationCap, Video, Headset } from "lucide-react";
+import { LayoutDashboard, Radio, LineChart, History, Headset } from "lucide-react";
 import { useAppReveal } from "@/lib/AppReveal";
 
 const ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/markets", label: "Markets", icon: TrendingUp },
-  { href: "/trade", label: "Trade", icon: ArrowLeftRight },
-  // Activity lives on the Training page (see src/app/training/page.js), next
-  // to the practice account itself — this deep-links straight to it rather
-  // than getting its own route, since "your account state" and "your recent
-  // fills" are the same concern.
-  { href: "/training#activity", label: "Activity", icon: History, matchPath: "/training" },
-  { href: "/training", label: "Training", icon: GraduationCap },
-  { href: "/meeting", label: "Online Meeting", icon: Video },
-  { href: "/coaching", label: "Train with Expert", icon: Headset },
+  { href: "/dashboard", label: "Main Dashboard", icon: LayoutDashboard },
+  { href: "/live-trading", label: "Live Trading", icon: Radio },
+  { href: "/virtual-trading", label: "Virtual Trading", icon: LineChart },
+  // Activity lives on the Virtual Trading page (see
+  // src/app/virtual-trading/page.js), next to the practice account itself
+  // — this deep-links straight to it rather than getting its own route,
+  // since "your account state" and "your recent fills" are the same
+  // concern.
+  { href: "/virtual-trading#activity", label: "Activity", icon: History, matchPath: "/virtual-trading" },
+  { href: "/mentorship", label: "Mentorship", icon: Headset },
 ];
 
 /**
