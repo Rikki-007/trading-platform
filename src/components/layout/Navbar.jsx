@@ -83,11 +83,6 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <span className="hidden items-center gap-1.5 rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-gold sm:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse-slow" />
-            Paper mode
-          </span>
-
           <ProfileMenu me={me} />
         </div>
       </div>

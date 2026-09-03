@@ -7,17 +7,20 @@ import { User, Wallet, ArrowDownLeft, ArrowUpRight, LogOut, ChevronDown } from "
 import { useMarket } from "@/lib/MarketProvider";
 import { formatCurrency } from "@/lib/market";
 import { signOut } from "@/lib/auth/actions";
+import AuthModal from "@/components/auth/AuthModal";
 
 /**
  * The 5th "tab" — separated from the 4 main nav links by design, per the
- * request. Two states: signed out renders a plain "Sign Up / Log In" link;
- * signed in renders a trigger that opens a dropdown with wallet balance and
- * recent trade history, so account state is one click away from anywhere
- * in the app instead of living only on /virtual-trading.
+ * request. Two states: signed out renders a "Sign Up / Log In" trigger that
+ * opens the glassmorphic AuthModal in place; signed in renders a trigger
+ * that opens a dropdown with wallet balance and recent trade history, so
+ * account state is one click away from anywhere in the app instead of
+ * living only on /virtual-trading.
  */
 export default function ProfileMenu({ me }) {
   const { equity, cash, trades } = useMarket();
   const [open, setOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -42,13 +45,16 @@ export default function ProfileMenu({ me }) {
 
   if (me === null) {
     return (
-      <Link
-        href="/login"
-        className="flex items-center gap-1.5 rounded-full bg-cyan px-3.5 py-1.5 text-xs font-semibold text-void-deep transition-transform hover:scale-[1.02]"
-      >
-        <User className="h-3.5 w-3.5" strokeWidth={2} />
-        Sign Up / Log In
-      </Link>
+      <>
+        <button
+          onClick={() => setAuthOpen(true)}
+          className="flex items-center gap-1.5 rounded-full bg-cyan px-3.5 py-1.5 text-xs font-semibold text-void-deep shadow-lg shadow-cyan/20 transition-all hover:scale-[1.02] hover:shadow-cyan/30"
+        >
+          <User className="h-3.5 w-3.5" strokeWidth={2} />
+          Sign Up / Log In
+        </button>
+        <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      </>
     );
   }
 
