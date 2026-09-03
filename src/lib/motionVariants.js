@@ -6,14 +6,15 @@ export const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-/** A slightly heavier version (adds scale) for hero-scale moments — used for
- * the home hero's choreographed reveal off the loading screen. */
+/** The home hero's choreographed reveal off the loading screen: starts
+ * above its resting position and slides straight down into place — a
+ * deliberate top-to-bottom motion, not the more common "rise up from
+ * below" — over exactly 1.2s with a smooth ease-in-out. */
 export const heroReveal = {
-  hidden: { opacity: 0, y: 18, scale: 0.97 },
+  hidden: { opacity: 0, y: -48 },
   show: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 1.2, ease: "easeInOut" },
   },
 };

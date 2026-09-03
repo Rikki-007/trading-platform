@@ -3,17 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, GraduationCap, Radio } from "lucide-react";
+import { TrendingUp, ArrowLeftRight, History, GraduationCap, Radio } from "lucide-react";
 import { useAppReveal } from "@/lib/AppReveal";
 
 const ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/markets", label: "Markets", icon: TrendingUp },
   { href: "/trade", label: "Trade", icon: ArrowLeftRight },
-  // Activity lives on the Dashboard page (see src/app/dashboard/page.js) —
-  // this deep-links straight to it rather than getting its own route, since
-  // "your account state" and "your recent fills" are the same concern.
-  { href: "/dashboard#activity", label: "Activity", icon: History, matchPath: "/dashboard" },
+  // Activity lives on the Training page (see src/app/training/page.js), next
+  // to the practice account itself — this deep-links straight to it rather
+  // than getting its own route, since "your account state" and "your recent
+  // fills" are the same concern.
+  { href: "/training#activity", label: "Activity", icon: History, matchPath: "/training" },
   { href: "/training", label: "Training", icon: GraduationCap },
   { href: "/live", label: "Live", icon: Radio },
 ];

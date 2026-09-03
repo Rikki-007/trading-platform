@@ -183,7 +183,7 @@ export default function OnboardingPage() {
                 <p className="mt-1 text-sm text-mist">Your terminal is ready.</p>
                 <motion.a
                   whileTap={{ scale: 0.97 }}
-                  href="/dashboard"
+                  href="/training"
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-cyan py-2.5 text-sm font-semibold text-void-deep"
                 >
                   Enter the terminal <ArrowRight className="h-4 w-4" strokeWidth={2} />

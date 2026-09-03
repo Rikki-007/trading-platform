@@ -6,14 +6,15 @@ import * as THREE from "three";
 const lookTarget = new THREE.Vector3();
 
 /**
- * Moves the camera instead of the scene: a pronounced parallax tilt toward
- * the cursor (still damped so it never feels twitchy, just noticeably more
- * alive than a subtle drift), plus a slow dolly-in as the page scrolls, so
- * descending the page reads as descending into the scene. Both the camera's
- * *position* and where it's *looking* react to the cursor — position alone
- * reads as a translate; adding the look-target offset makes it read as the
- * camera genuinely turning toward the cursor, which is what actually sells
- * "dynamic" rather than "sliding."
+ * Moves the camera instead of the scene: a gentle parallax tilt toward the
+ * cursor (damped so it never feels twitchy), plus a slow dolly-in as the
+ * page scrolls, so descending the page reads as descending into the scene.
+ * Both the camera's *position* and where it's *looking* react to the cursor
+ * — position alone reads as a translate; the look-target offset makes it
+ * read as the camera turning toward the cursor. Tuned to be a graceful,
+ * ambient reaction rather than something that competes for attention with
+ * the foreground content — see CompassRig for the matching restraint on the
+ * instrument's own tilt.
  */
 export default function CameraRig({ liveInputRef, reducedMotion }) {
   const { camera } = useThree();
@@ -27,8 +28,8 @@ export default function CameraRig({ liveInputRef, reducedMotion }) {
     const { pointer, scrollProgress } = liveInputRef.current ?? { pointer: { x: 0, y: 0 }, scrollProgress: 0 };
     const parallax = reducedMotion ? 0.15 : 1;
 
-    const targetX = pointer.x * 2.6 * parallax;
-    const targetY = -pointer.y * 1.6 * parallax + scrollProgress * 0.4;
+    const targetX = pointer.x * 1.3 * parallax;
+    const targetY = -pointer.y * 0.8 * parallax + scrollProgress * 0.4;
     const targetZ = 11 - scrollProgress * 4.5;
 
     const damp = 1 - Math.pow(0.0006, delta);
@@ -36,7 +37,7 @@ export default function CameraRig({ liveInputRef, reducedMotion }) {
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, damp);
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, damp * 0.6);
 
-    lookTarget.set(pointer.x * 2.2 * parallax, -scrollProgress * 1.2 - pointer.y * 1.3 * parallax, -4);
+    lookTarget.set(pointer.x * 1.1 * parallax, -scrollProgress * 1.2 - pointer.y * 0.65 * parallax, -4);
     camera.lookAt(lookTarget);
   });
   /* eslint-enable react-hooks/immutability */

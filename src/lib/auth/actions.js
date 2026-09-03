@@ -5,7 +5,8 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 /**
  * Server Action backing the email/password login form. Redirects to
- * /dashboard on success; on failure, redirects back to /login with an
+ * /training (the practice account) on success; on failure, redirects back
+ * to /login with an
  * `error` query param the page reads to show a message (keeps this a plain
  * <form action={...}> with no client-side JS required to submit).
  */
@@ -23,7 +24,7 @@ export async function signInWithPassword(formData) {
     redirect("/login?error=" + encodeURIComponent(error.message));
   }
 
-  redirect("/dashboard");
+  redirect("/training");
 }
 
 /**

@@ -11,7 +11,6 @@ import { signOut } from "@/lib/auth/actions";
 import { useAppReveal } from "@/lib/AppReveal";
 
 const LINKS = [
-  { href: "/dashboard", label: "Dashboard" },
   { href: "/markets", label: "Markets" },
   { href: "/trade", label: "Trade" },
   { href: "/training", label: "Training" },

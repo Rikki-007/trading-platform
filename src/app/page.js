@@ -51,7 +51,7 @@ export default function HomePage() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
-              href="/dashboard"
+              href="/training"
               className="group inline-flex items-center gap-2 rounded-full bg-cyan px-5 py-2.5 text-sm font-semibold text-void-deep transition-transform hover:scale-[1.02]"
             >
               Enter the terminal

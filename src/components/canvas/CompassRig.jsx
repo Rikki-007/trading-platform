@@ -47,18 +47,18 @@ export default function CompassRig({ liveInputRef, reducedMotion }) {
       const pointerMul = reducedMotion ? 0.1 : 1;
 
       // sink slightly and tilt as the page descends, like the instrument is
-      // dropping deeper into the void with the reader — plus a pronounced
-      // lean toward the cursor, layered on top, so the whole instrument
-      // visibly turns to face wherever the user is looking.
+      // dropping deeper into the void with the reader — plus a gentle lean
+      // toward the cursor, layered on top, kept subtle so it reads as
+      // ambient life rather than something fighting for attention.
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, -scrollProgress * 2.2, 0.05);
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
-        scrollProgress * 0.25 - pointer.y * 0.45 * pointerMul,
+        scrollProgress * 0.25 - pointer.y * 0.2 * pointerMul,
         0.06
       );
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
-        pointer.x * 0.55 * pointerMul,
+        pointer.x * 0.25 * pointerMul,
         0.06
       );
     }
