@@ -13,7 +13,7 @@ const FEATURES = [
     description:
       "Practice with $100,000 in mock capital today, or step into the funded tier once you're ready to go live.",
     cta: "Enter the terminal",
-    href: "#trade",
+    href: "/trade",
   },
   {
     id: "training",
@@ -23,7 +23,7 @@ const FEATURES = [
     description:
       "Structured lessons and strategy walkthroughs for every experience level — in active development.",
     cta: "See what's coming",
-    href: "#training",
+    href: "/training",
   },
   {
     id: "call-expert",
@@ -33,7 +33,7 @@ const FEATURES = [
     description:
       "Book a private session with an admin to walk through strategy, or get hands-on help with your account.",
     cta: "Request a call",
-    href: "#live",
+    href: "/live",
   },
   {
     id: "video-call",
@@ -43,7 +43,7 @@ const FEATURES = [
     description:
       "Join a live video room straight from your dashboard — no separate app, no extra login.",
     cta: "Join a room",
-    href: "#live",
+    href: "/live",
   },
 ];
 

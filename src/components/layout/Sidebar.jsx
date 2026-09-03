@@ -1,56 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, GraduationCap, Radio } from "lucide-react";
+import { useAppReveal } from "@/lib/AppReveal";
 
 const ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "markets", label: "Markets", icon: TrendingUp },
-  { id: "trade", label: "Trade", icon: ArrowLeftRight },
-  { id: "activity", label: "Activity", icon: History },
-  { id: "training", label: "Training", icon: GraduationCap },
-  { id: "live", label: "Live", icon: Radio },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/markets", label: "Markets", icon: TrendingUp },
+  { href: "/trade", label: "Trade", icon: ArrowLeftRight },
+  // Activity lives on the Dashboard page (see src/app/dashboard/page.js) —
+  // this deep-links straight to it rather than getting its own route, since
+  // "your account state" and "your recent fills" are the same concern.
+  { href: "/dashboard#activity", label: "Activity", icon: History, matchPath: "/dashboard" },
+  { href: "/training", label: "Training", icon: GraduationCap },
+  { href: "/live", label: "Live", icon: Radio },
 ];
 
+/**
+ * Was scroll-spy (IntersectionObserver watching section ids) back when
+ * every section lived on one page. Now that each is its own route, "active"
+ * just means "the current path" — usePathname replaces the observer
+ * entirely, and is simpler besides.
+ */
 export default function Sidebar() {
-  const [active, setActive] = useState("dashboard");
-
-  useEffect(() => {
-    const sections = ITEMS.map((item) => document.getElementById(item.id)).filter(Boolean);
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-40% 0px -40% 0px", threshold: [0.1, 0.25, 0.5, 0.75] }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+  const pathname = usePathname();
+  const { ready } = useAppReveal();
 
   return (
     <motion.aside
       initial={{ x: -24, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+      animate={ready ? { x: 0, opacity: 1 } : { x: -24, opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ready ? 0.1 : 0 }}
       className="fixed left-4 top-1/2 z-30 hidden -translate-y-1/2 lg:block"
       aria-label="Section navigation"
     >
       <nav className="flex flex-col items-center gap-1 rounded-2xl border border-hairline bg-navy/50 p-2 backdrop-blur-md">
-        {ITEMS.map(({ id, label, icon: Icon }) => {
-          const isActive = active === id;
+        {ITEMS.map(({ href, label, icon: Icon, matchPath }) => {
+          const isActive = pathname === (matchPath ?? href);
           return (
-            <a
-              key={id}
-              href={`#${id}`}
+            <Link
+              key={href}
+              href={href}
               aria-label={label}
-              aria-current={isActive ? "true" : undefined}
+              aria-current={isActive ? "page" : undefined}
               className="group relative flex h-10 w-10 items-center justify-center rounded-xl transition-colors"
             >
               {isActive && (
@@ -69,7 +63,7 @@ export default function Sidebar() {
               <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-lg border border-hairline bg-navy px-2.5 py-1 text-xs text-porcelain opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
                 {label}
               </span>
-            </a>
+            </Link>
           );
         })}
       </nav>

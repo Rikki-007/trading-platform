@@ -1,4 +1,4 @@
-# Meridian — Paper Trading Terminal
+# Lodestar Meridian Exchange — Paper Trading Terminal
 
 A simulated (paper) trading dashboard with a scroll- and cursor-reactive 3D
 background: a navigation-instrument motif (rings + a pulsing core, evoking a
@@ -35,20 +35,37 @@ npm run lint    # ESLint
 
 ## Structure
 
+The app is a real multi-page Next.js site now (`/`, `/dashboard`, `/markets`,
+`/trade`, `/training`, `/live`, plus `/login`, `/signup`, `/onboarding`) —
+not a single scrolling page. Chrome that needs to persist across navigation
+(the 3D canvas, the loading screen, the ticking market state, nav/sidebar/
+footer) lives once in the root layout via `AppShell`, so it doesn't remount
+— and the WebGL context doesn't get torn down and rebuilt — every time you
+click a nav link.
+
 ```
 src/
 ├── app/
-│   ├── layout.js         — fonts (Geist, Cinzel for the wordmark), metadata
-│   ├── page.js            — orchestrates layout + all sections
-│   └── globals.css        — design tokens (color, font, keyframes) as Tailwind v4 @theme
+│   ├── layout.js          — fonts, metadata, renders <AppShell>{children}</AppShell>
+│   ├── page.js             — home route: hero branding + the 4 feature cards, nothing else
+│   ├── dashboard/page.js   — portfolio summary + activity log
+│   ├── markets/page.js     — instrument chart + watchlist (reads/writes the shared selection)
+│   ├── trade/page.js       — order book + execution (reads the shared selection)
+│   ├── training/page.js    — honest "coming soon" panel
+│   ├── live/page.js        — live market data, video consulting, trade broadcasts
+│   └── globals.css         — design tokens (color, font, keyframes) as Tailwind v4 @theme
 ├── components/
 │   ├── canvas/
 │   │   ├── OnePieceTradingCanvas.jsx  — Canvas wrapper, scene composition, depth fog
-│   │   ├── CompassRig.jsx             — the rotating ring instrument + pulsing core
+│   │   ├── CompassRig.jsx             — the rotating ring instrument + pulsing core, now cursor-reactive too
 │   │   ├── VoidField.jsx              — custom-shader particle field
 │   │   └── CameraRig.jsx              — cursor-parallax + scroll-driven camera movement
+│   ├── loading/LoadingScreen.jsx  — cinematic splash, choreographed with AppReveal (see below)
+│   ├── motion/MicroTilt.jsx       — subtle viewport-driven tilt for headings/text, used sitewide
 │   ├── layout/
-│   │   ├── Navbar.jsx, Sidebar.jsx, Footer.jsx  — glassmorphic chrome
+│   │   ├── AppShell.jsx           — the persistent shell: providers + canvas + nav/sidebar/footer
+│   │   ├── SectionHeading.jsx     — shared page-header component (eyebrow/title/description)
+│   │   └── Navbar.jsx, Sidebar.jsx, Footer.jsx  — glassmorphic chrome, route-aware active states
 │   └── trading/
 │       ├── PortfolioSummary.jsx   — equity/cash/holdings + equity sparkline
 │       ├── Watchlist.jsx          — instrument grid, click to select
@@ -59,8 +76,10 @@ src/
 │       ├── AnimatedNumber.jsx     — spring-tweened numeric readout
 │       └── Sparkline.jsx          — minimal axis-less line/area chart (no charting lib)
 └── lib/
-    ├── market.js           — pure helpers: instruments, price stepping, order book synthesis, formatting
-    └── MarketProvider.jsx  — the "backend": ticking prices, cash/positions, trade execution, equity history
+    ├── market.js            — pure helpers: instruments, price stepping, order book synthesis, formatting
+    ├── MarketProvider.jsx   — the "backend": ticking prices, cash/positions, trade execution, equity history
+    ├── SelectionProvider.jsx — the selected-instrument symbol, shared across /markets and /trade
+    └── AppReveal.jsx        — the "has the loading screen started exiting yet?" flag every entrance animation waits on
 ```
 
 ## How the mock market works

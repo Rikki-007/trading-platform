@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div className="flex items-center gap-2 text-mist">
           <Compass className="h-4 w-4 text-gold/70" strokeWidth={1.75} />
-          <span className="font-display text-xs tracking-[0.14em] text-mist">MERIDIAN</span>
+          <span className="font-display text-xs tracking-[0.14em] text-mist">LODESTAR MERIDIAN EXCHANGE</span>
           <span className="text-hairline-strong">/</span>
           <span className="text-xs">Chart your own course.</span>
         </div>

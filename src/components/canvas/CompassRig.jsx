@@ -43,10 +43,24 @@ export default function CompassRig({ liveInputRef, reducedMotion }) {
       coreLight.current.intensity = 2.2 + scrollProgress * 3.5 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
     }
     if (groupRef.current) {
+      const pointer = liveInputRef.current?.pointer ?? { x: 0, y: 0 };
+      const pointerMul = reducedMotion ? 0.1 : 1;
+
       // sink slightly and tilt as the page descends, like the instrument is
-      // dropping deeper into the void with the reader
+      // dropping deeper into the void with the reader — plus a pronounced
+      // lean toward the cursor, layered on top, so the whole instrument
+      // visibly turns to face wherever the user is looking.
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, -scrollProgress * 2.2, 0.05);
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, scrollProgress * 0.25, 0.05);
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(
+        groupRef.current.rotation.x,
+        scrollProgress * 0.25 - pointer.y * 0.45 * pointerMul,
+        0.06
+      );
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        pointer.x * 0.55 * pointerMul,
+        0.06
+      );
     }
   });
 

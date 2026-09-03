@@ -23,7 +23,7 @@ export async function signInWithPassword(formData) {
     redirect("/login?error=" + encodeURIComponent(error.message));
   }
 
-  redirect("/");
+  redirect("/dashboard");
 }
 
 /**

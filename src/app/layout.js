@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono, Cinzel } from "next/font/google";
+import AppShell from "@/components/layout/AppShell";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,7 +31,7 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-void text-porcelain selection:bg-cyan/30">
-        {children}
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
