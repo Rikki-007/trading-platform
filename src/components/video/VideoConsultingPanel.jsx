@@ -13,8 +13,15 @@ import VideoRoom from "./VideoRoom";
  * Admin status is self-fetched from /api/me (server-verified there against
  * profiles.is_admin) rather than trusted from a prop — this component can
  * be dropped anywhere without a server-component parent to feed it one.
+ *
+ * `mode` scopes which admin start-buttons render, so the same panel can be
+ * dropped on both /meeting ("consultation" — 1:1 booking) and /coaching
+ * ("coaching" — group live-trading room) and only show the button relevant
+ * to that page. Defaults to "both" for any other embed.
  */
-export default function VideoConsultingPanel() {
+export default function VideoConsultingPanel({ mode = "both" }) {
+  const showConsultation = mode === "consultation" || mode === "both";
+  const showCoaching = mode === "coaching" || mode === "both";
   const [isAdmin, setIsAdmin] = useState(false);
   const [session, setSession] = useState(null); // { url, token }
   const [joinRoomName, setJoinRoomName] = useState("");
@@ -84,22 +91,26 @@ export default function VideoConsultingPanel() {
 
       {isAdmin ? (
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <motion.button
-            whileTap={{ scale: 0.97 }}
-            onClick={() => startRoom("consultation")}
-            disabled={pending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-cyan py-2.5 text-sm font-semibold text-void-deep disabled:opacity-60"
-          >
-            {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start 1:1 consultation"}
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.97 }}
-            onClick={() => startRoom("live-room")}
-            disabled={pending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-hairline py-2.5 text-sm text-porcelain transition-colors hover:bg-navy-light disabled:opacity-60"
-          >
-            {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start live trading room"}
-          </motion.button>
+          {showConsultation && (
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              onClick={() => startRoom("consultation")}
+              disabled={pending}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-cyan py-2.5 text-sm font-semibold text-void-deep disabled:opacity-60"
+            >
+              {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start 1:1 consultation"}
+            </motion.button>
+          )}
+          {showCoaching && (
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              onClick={() => startRoom("live-room")}
+              disabled={pending}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-hairline py-2.5 text-sm text-porcelain transition-colors hover:bg-navy-light disabled:opacity-60"
+            >
+              {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start live trading room"}
+            </motion.button>
+          )}
         </div>
       ) : (
         <form onSubmit={joinRoom} className="mt-4 flex gap-2">

@@ -3,6 +3,7 @@
 import SectionHeading from "@/components/layout/SectionHeading";
 import PriceChart from "@/components/trading/PriceChart";
 import Watchlist from "@/components/trading/Watchlist";
+import LiveMarketsPanel from "@/components/trading/LiveMarketsPanel";
 import { useSelection } from "@/lib/SelectionProvider";
 
 export default function MarketsPage() {
@@ -13,11 +14,14 @@ export default function MarketsPage() {
       <SectionHeading
         eyebrow="Markets"
         title="Pick an instrument"
-        description="Select anything below to load it into the order book and execution panel on the Trade page."
+        description="Select anything below to load it into the order book and execution panel on the Trade page. Real market data — separate from the practice-tier instruments — sits alongside it."
       />
-      <div className="space-y-4">
-        <PriceChart symbol={selectedSymbol} />
-        <Watchlist selectedSymbol={selectedSymbol} onSelect={setSelectedSymbol} />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
+        <div className="space-y-4">
+          <PriceChart symbol={selectedSymbol} />
+          <Watchlist selectedSymbol={selectedSymbol} onSelect={setSelectedSymbol} />
+        </div>
+        <LiveMarketsPanel />
       </div>
     </div>
   );

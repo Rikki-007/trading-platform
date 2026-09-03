@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { TrendingUp, ArrowLeftRight, History, GraduationCap, Radio } from "lucide-react";
+import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, GraduationCap, Video, Headset } from "lucide-react";
 import { useAppReveal } from "@/lib/AppReveal";
 
 const ITEMS = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/markets", label: "Markets", icon: TrendingUp },
   { href: "/trade", label: "Trade", icon: ArrowLeftRight },
   // Activity lives on the Training page (see src/app/training/page.js), next
@@ -15,7 +16,8 @@ const ITEMS = [
   // fills" are the same concern.
   { href: "/training#activity", label: "Activity", icon: History, matchPath: "/training" },
   { href: "/training", label: "Training", icon: GraduationCap },
-  { href: "/live", label: "Live", icon: Radio },
+  { href: "/meeting", label: "Online Meeting", icon: Video },
+  { href: "/coaching", label: "Train with Expert", icon: Headset },
 ];
 
 /**

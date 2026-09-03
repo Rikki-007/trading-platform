@@ -11,10 +11,12 @@ import { signOut } from "@/lib/auth/actions";
 import { useAppReveal } from "@/lib/AppReveal";
 
 const LINKS = [
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/markets", label: "Markets" },
   { href: "/trade", label: "Trade" },
   { href: "/training", label: "Training" },
-  { href: "/live", label: "Live" },
+  { href: "/meeting", label: "Online Meeting" },
+  { href: "/coaching", label: "Train with Expert" },
 ];
 
 export default function Navbar() {
@@ -67,7 +69,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
-                className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
                   isActive ? "bg-navy-light text-porcelain" : "text-mist hover:bg-navy-light hover:text-porcelain"
                 }`}
               >

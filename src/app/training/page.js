@@ -2,6 +2,7 @@ import { GraduationCap } from "lucide-react";
 import SectionHeading from "@/components/layout/SectionHeading";
 import PortfolioSummary from "@/components/trading/PortfolioSummary";
 import ActivityLog from "@/components/trading/ActivityLog";
+import TrainingIntroModal from "@/components/trading/TrainingIntroModal";
 import { formatCurrency, STARTING_CASH } from "@/lib/market";
 
 export const metadata = { title: "Virtual Stock Training — Lodestar Meridian Exchange" };
@@ -17,6 +18,7 @@ export const metadata = { title: "Virtual Stock Training — Lodestar Meridian E
 export default function TrainingPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <TrainingIntroModal />
       <SectionHeading
         eyebrow="Virtual Stock Training"
         title={`Your ${formatCurrency(STARTING_CASH, { compact: true })} practice environment`}
