@@ -18,7 +18,7 @@ const cinzel = Cinzel({
 });
 
 export const metadata = {
-  title: "Meridian — Paper Trading Terminal",
+  title: "Lodestar Meridian Exchange",
   description:
     "Chart your own course. A paper trading terminal for practicing real strategies with zero real-money risk.",
 };

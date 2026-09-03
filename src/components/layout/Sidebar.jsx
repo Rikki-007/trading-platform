@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, Radio } from "lucide-react";
+import { LayoutDashboard, TrendingUp, ArrowLeftRight, History, GraduationCap, Radio } from "lucide-react";
 
 const ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "markets", label: "Markets", icon: TrendingUp },
   { id: "trade", label: "Trade", icon: ArrowLeftRight },
   { id: "activity", label: "Activity", icon: History },
+  { id: "training", label: "Training", icon: GraduationCap },
   { id: "live", label: "Live", icon: Radio },
 ];
 

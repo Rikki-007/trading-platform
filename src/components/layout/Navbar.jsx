@@ -11,6 +11,7 @@ const LINKS = [
   { href: "#dashboard", label: "Dashboard" },
   { href: "#markets", label: "Markets" },
   { href: "#trade", label: "Trade" },
+  { href: "#training", label: "Training" },
   { href: "#live", label: "Live" },
 ];
 
@@ -48,8 +49,9 @@ export default function Navbar() {
             <Compass className="h-4 w-4" strokeWidth={1.75} />
             <span className="absolute inset-0 rounded-full bg-gold/10 blur-md" />
           </span>
-          <span className="font-display text-[15px] tracking-[0.16em] text-porcelain">
-            MERIDIAN
+          <span className="font-display text-[13px] leading-none tracking-[0.14em] text-porcelain sm:text-[14px]">
+            LODESTAR MERIDIAN
+            <span className="ml-1.5 hidden text-gold sm:inline">EXCHANGE</span>
           </span>
         </a>
 
