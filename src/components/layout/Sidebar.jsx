@@ -7,7 +7,8 @@ import { LayoutDashboard, Radio, LineChart, History, Headset } from "lucide-reac
 import { useAppReveal } from "@/lib/AppReveal";
 
 const ITEMS = [
-  { href: "/dashboard", label: "Main Dashboard", icon: LayoutDashboard },
+  // Same "/" as the navbar's Main Dashboard tab — see the comment there.
+  { href: "/", label: "Main Dashboard", icon: LayoutDashboard },
   { href: "/live-trading", label: "Live Trading", icon: Radio },
   { href: "/virtual-trading", label: "Virtual Trading", icon: LineChart },
   // Activity lives on the Virtual Trading page (see

@@ -11,8 +11,13 @@ import { useAppReveal } from "@/lib/AppReveal";
 // Strictly 4 primary tabs here — Profile/Auth (ProfileMenu) is the 5th,
 // deliberately kept separate on the right rather than folded into this
 // list, per the requested "4 main tabs + Profile/Auth" structure.
+//
+// "Main Dashboard" points at "/" itself, not a separate /dashboard route —
+// the hero + 4 feature cards *is* the main dashboard now; there's no second
+// overview page to navigate to. See src/app/page.js and src/app/dashboard/
+// page.js (a redirect back here, kept only so old links don't 404).
 const LINKS = [
-  { href: "/dashboard", label: "Main Dashboard" },
+  { href: "/", label: "Main Dashboard" },
   { href: "/live-trading", label: "Live Trading" },
   { href: "/virtual-trading", label: "Virtual Trading" },
   { href: "/mentorship", label: "Mentorship" },

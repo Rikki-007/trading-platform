@@ -16,6 +16,12 @@ import AuthModal from "@/components/auth/AuthModal";
  * that opens a dropdown with wallet balance and recent trade history, so
  * account state is one click away from anywhere in the app instead of
  * living only on /virtual-trading.
+ *
+ * Both triggers share the exact button DNA of the main nav tabs (Navbar.jsx
+ * LINKS) — same rounded-full glass-pill wrapper, same px-3.5 py-1.5 text-sm
+ * sizing, same hover:bg-navy-light hover:text-porcelain treatment — just in
+ * their own separate pill so this still reads as an independent action
+ * item rather than a 5th entry glued onto the tab group.
  */
 export default function ProfileMenu({ me }) {
   const { equity, cash, trades } = useMarket();
@@ -46,13 +52,15 @@ export default function ProfileMenu({ me }) {
   if (me === null) {
     return (
       <>
-        <button
-          onClick={() => setAuthOpen(true)}
-          className="flex items-center gap-1.5 rounded-full bg-cyan px-3.5 py-1.5 text-xs font-semibold text-void-deep shadow-lg shadow-cyan/20 transition-all hover:scale-[1.02] hover:shadow-cyan/30"
-        >
-          <User className="h-3.5 w-3.5" strokeWidth={2} />
-          Sign Up / Log In
-        </button>
+        <div className="flex items-center rounded-full border border-hairline bg-navy/40 p-1 backdrop-blur-sm">
+          <button
+            onClick={() => setAuthOpen(true)}
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm text-cyan transition-colors hover:bg-navy-light hover:text-porcelain"
+          >
+            <User className="h-3.5 w-3.5" strokeWidth={1.75} />
+            Sign Up / Log In
+          </button>
+        </div>
         <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
       </>
     );
@@ -60,23 +68,27 @@ export default function ProfileMenu({ me }) {
 
   return (
     <div ref={containerRef} className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-haspopup="true"
-        aria-expanded={open}
-        className="flex items-center gap-2 rounded-full border border-hairline bg-navy/50 px-3 py-1.5 text-sm transition-colors hover:border-hairline-strong"
-      >
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan/15 text-cyan">
-          <User className="h-3 w-3" strokeWidth={2} />
-        </span>
-        <span className="hidden font-mono font-variant-tabular text-porcelain sm:inline">
-          {formatCurrency(equity, { compact: true })}
-        </span>
-        <ChevronDown
-          className={`h-3.5 w-3.5 text-mist-dim transition-transform ${open ? "rotate-180" : ""}`}
-          strokeWidth={2}
-        />
-      </button>
+      <div className="flex items-center rounded-full border border-hairline bg-navy/40 p-1 backdrop-blur-sm">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-haspopup="true"
+          aria-expanded={open}
+          className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+            open ? "bg-navy-light text-porcelain" : "text-mist hover:bg-navy-light hover:text-porcelain"
+          }`}
+        >
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan/15 text-cyan">
+            <User className="h-3 w-3" strokeWidth={2} />
+          </span>
+          <span className="hidden font-mono font-variant-tabular sm:inline">
+            {formatCurrency(equity, { compact: true })}
+          </span>
+          <ChevronDown
+            className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+            strokeWidth={2}
+          />
+        </button>
+      </div>
 
       <AnimatePresence>
         {open && (

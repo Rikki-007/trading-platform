@@ -32,7 +32,7 @@ const LoadingGate = dynamic(() => import("@/components/layout/LoadingGate"), {
  * instead of remounting on every click — the 3D canvas keeps its WebGL
  * context, the loading screen shows exactly once per app load (not once per
  * page), and MarketProvider/SelectionProvider stay alive so state survives
- * moving between /dashboard, /live-trading, /virtual-trading, /mentorship, etc.
+ * moving between /, /live-trading, /virtual-trading, /mentorship, etc.
  */
 export default function AppShell({ children }) {
   return (
