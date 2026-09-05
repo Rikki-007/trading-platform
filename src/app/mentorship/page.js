@@ -1,6 +1,8 @@
+import { Phone, Mail } from "lucide-react";
 import SectionHeading from "@/components/layout/SectionHeading";
 import VideoConsultingPanel from "@/components/video/VideoConsultingPanel";
 import BroadcastFeed from "@/components/notifications/BroadcastFeed";
+import { CONTACT_INFO } from "@/lib/contact/info";
 
 export const metadata = { title: "Mentorship — Lodestar Meridian Exchange" };
 
@@ -23,6 +25,26 @@ export default function MentorshipPage() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <VideoConsultingPanel mode="both" />
         <BroadcastFeed />
+      </div>
+
+      <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-hairline bg-navy/30 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-mist">Prefer to talk directly instead of booking a room?</p>
+        <div className="flex flex-wrap items-center gap-4 text-sm">
+          <a
+            href={`tel:${CONTACT_INFO.expertLinePhone.replace(/[^+\d]/g, "")}`}
+            className="flex items-center gap-1.5 text-porcelain hover:text-cyan"
+          >
+            <Phone className="h-3.5 w-3.5" strokeWidth={1.75} />
+            {CONTACT_INFO.expertLinePhone}
+          </a>
+          <a
+            href={`mailto:${CONTACT_INFO.supportEmail}`}
+            className="flex items-center gap-1.5 text-porcelain hover:text-cyan"
+          >
+            <Mail className="h-3.5 w-3.5" strokeWidth={1.75} />
+            {CONTACT_INFO.supportEmail}
+          </a>
+        </div>
       </div>
     </div>
   );

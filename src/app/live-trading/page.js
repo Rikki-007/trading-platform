@@ -1,6 +1,7 @@
 import { Landmark, ShieldAlert } from "lucide-react";
 import SectionHeading from "@/components/layout/SectionHeading";
 import LiveMarketsPanel from "@/components/trading/LiveMarketsPanel";
+import ProTraderSection from "@/components/live/ProTraderSection";
 
 export const metadata = { title: "Live Trading — Lodestar Meridian Exchange" };
 
@@ -23,6 +24,8 @@ export default function LiveTradingPage() {
       />
 
       <LiveMarketsPanel />
+
+      <ProTraderSection />
 
       <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl border border-dashed border-hairline-strong bg-navy/30 p-6 sm:flex-row sm:items-center">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-hairline-strong bg-void-deep/50 text-gold">

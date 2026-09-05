@@ -4,15 +4,18 @@ import { motion } from "framer-motion";
 import { Compass, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 
 import FeatureCards from "@/components/home/FeatureCards";
+import MissionSection from "@/components/home/MissionSection";
 import MicroTilt from "@/components/motion/MicroTilt";
 import { useAppReveal } from "@/lib/AppReveal";
 import { heroReveal } from "@/lib/motionVariants";
 import { formatCurrency, STARTING_CASH } from "@/lib/market";
 
 /**
- * The home route — hero branding and the four feature cards, nothing else.
- * Every other module (dashboard, live trading, virtual trading, mentorship)
- * now lives on its own route under src/app/*.
+ * The home route — hero branding, the four feature cards, and a mission
+ * section explaining what Meridian is and how to get involved (practice,
+ * community, mentorship). Every module itself (dashboard, live trading,
+ * virtual trading, mentorship, get-started) lives on its own route under
+ * src/app/*.
  */
 export default function HomePage() {
   const { ready } = useAppReveal();
@@ -80,6 +83,9 @@ export default function HomePage() {
 
       {/* ------------------------------------------------------------ FEATURES */}
       <FeatureCards />
+
+      {/* -------------------------------------------------------------- MISSION */}
+      <MissionSection />
     </>
   );
 }
